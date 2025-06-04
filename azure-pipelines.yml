@@ -11,13 +11,15 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  wwwRootdir: 'Tailspin.SpaceGame.Web/wwwroot'
+  dotnetSdkVersion: '8.0.x'
 
 steps:
 - task: UseDotNet@2
-  displayName: 'Use .NET SDK 8.0.x'
+  displayName: 'Use .NET SDK $(dotnetSdkVersion)'
   inputs:
     packageType: sdk
-    version: '8.0.x'
+    version: '$(dotnetSdkVersion)'
 
 - task: Npm@1
   displayName: 'Run npm install'
@@ -25,7 +27,7 @@ steps:
     command: install
     verbose: false
   
-- script: 'npx sass Tailspin.SpaceGame.Web/wwwroot:Tailspin.SpaceGame.Web/wwwroot'
+- script: 'npx sass $(wwwRootdir):$(wwwRootdir)'
   displayName: 'Compile Sass assets'
 
 - task: gulp@1
@@ -33,7 +35,7 @@ steps:
 
 - script: 'echo "$(Build.DefinitionName), $(Build.BuildId), $(Build.BuildNumber)" > buildInfo.txt'
   displayName: 'Write build info'
-  workingDirectory: Tailspin.SpaceGame.Web/wwwroot
+  workingDirectory: $(wwwRootdir)
 
 - task: DotNetCoreCLI@2
   displayName: 'Restore project dependencies'
@@ -54,7 +56,7 @@ steps:
     command: publish
     publishWebProjects: false
     projects: '**/*.csproj'
-    arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/Release'
+    arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
     zipAfterPublish: true
   
 - task: PublishBuildArtifacts@1
