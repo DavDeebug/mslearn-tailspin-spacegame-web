@@ -25,7 +25,7 @@ steps:
     command: install
     verbose: false
   
-- script: './node_modules/.bin/node-sass TailSpin.SpaceGame.Web/wwwroot --output Tailspin.SpaceGame.Web/wwwroot'
+- script: 'npx sass TailSpin.SpaceGame.Web/wwwroot:TailSpin.SpaceGame.Web/wwwroot'
   displayName: 'Compile Sass assets'
 
 - task: gulp@1
