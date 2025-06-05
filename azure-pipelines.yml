@@ -3,8 +3,6 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-latest'
-  demands:
-  - npm
 
 variables:
   buildConfiguration: 'Release'
@@ -16,11 +14,6 @@ steps:
   displayName: 'Use .NET SDK $(dotnetSdkVersion)'
   inputs:
     version: '$(dotnetSdkVersion)'
-
-- task: Npm@1
-  displayName: 'Run npm install'
-  inputs:
-    verbose: false
 
 - script: 'npx sass $(wwwRootdir):$(wwwRootdir)'
   displayName: 'Compile Sass assets'
