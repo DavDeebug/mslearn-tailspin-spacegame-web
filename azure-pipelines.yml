@@ -36,13 +36,18 @@ steps:
   displayName: 'Write build info'
   workingDirectory: $(wwwrootDir)
 
+- task: NuGetAuthenticate@1
+  displayName: 'Authenticate with Azure Artifacts'
+  #inputs:
+    
+
 - task: DotNetCoreCLI@2
   displayName: 'Restore project dependencies'
   inputs:
     command: 'restore'
     projects: '**/*.csproj'
     feedsToUse: 'select'
-    vstsFeed: '$(System.TeamProject)/Tailspin.SpaceGame.Web.Models2'
+    vstsFeed: 'Space Game - web - Dependencies/Tailspin.SpaceGame.Web.Models2'
 
 - task: DotNetCoreCLI@2
   displayName: 'Build the project - $(buildConfiguration)'
