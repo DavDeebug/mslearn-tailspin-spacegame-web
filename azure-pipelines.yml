@@ -39,7 +39,6 @@ steps:
 - task: NuGetAuthenticate@1
   displayName: 'Authenticate with Azure Artifacts'
   #inputs:
-    
 
 - task: DotNetCoreCLI@2
   displayName: 'Restore project dependencies'
@@ -47,7 +46,7 @@ steps:
     command: 'restore'
     projects: '**/*.csproj'
     feedsToUse: config
-    nugetConfigPath: 'nuget.config'
+    nugetConfigPath: '$(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/nuget.config'
 
 - task: DotNetCoreCLI@2
   displayName: 'Build the project - $(buildConfiguration)'
